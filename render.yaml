@@ -1,0 +1,15 @@
+# Render Blueprint — deploys the app as a free web service with a permanent URL.
+services:
+  - type: web
+    name: daily-quiz
+    runtime: node
+    plan: free
+    buildCommand: npm install --no-audit --no-fund
+    startCommand: node server.js
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # Optional: enable AI-generated quizzes (free tier key from https://aistudio.google.com)
+      # - key: GEMINI_API_KEY
+      #   sync: false

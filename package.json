@@ -1,0 +1,22 @@
+{
+  "name": "daily-quiz-pwa",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Daily field-based quiz PWA with notifications, free courses and job/startup opportunities",
+  "scripts": {
+    "start": "node server.js",
+    "icons": "node scripts/gen-icons.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "web-push": "^3.6.7"
+  },
+  "devDependencies": {
+    "puppeteer-core": "^25.17.0"
+  }
+}

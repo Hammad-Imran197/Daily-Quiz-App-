@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#6c5ce7" />
+  <meta name="description" content="Daily quizzes for your field — with explanations, free courses, jobs and startup opportunities." />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="icon" href="/icons/icon-192.png" />
+  <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+  <link rel="stylesheet" href="/styles.css" />
+  <title>Daily Quiz — Learn Your Field Daily</title>
+</head>
+<body>
+  <!-- ========== AUTH ========== -->
+  <div id="auth-screen" class="screen" hidden>
+    <div class="auth-card">
+      <div class="auth-logo">🧠</div>
+      <h1>Daily Quiz</h1>
+      <p class="muted">Pick your field. Get a fresh quiz every day.<br />Learn from the explanations.</p>
+
+      <div class="auth-tabs">
+        <button type="button" id="tab-login" class="active">Log in</button>
+        <button type="button" id="tab-register">Sign up</button>
+      </div>
+
+      <form id="auth-form" autocomplete="on">
+        <input id="auth-name" class="input" type="text" placeholder="Your name" autocomplete="name" hidden />
+        <div id="auth-field-wrap" hidden>
+          <label class="label">Choose your field</label>
+          <div id="auth-field-chips" class="chips"></div>
+        </div>
+        <input id="auth-email" class="input" type="email" placeholder="Email" autocomplete="email" required />
+        <input id="auth-password" class="input" type="password" placeholder="Password (min. 6 characters)" autocomplete="current-password" required />
+        <button id="auth-submit" class="btn primary block" type="submit">Log in</button>
+        <p id="auth-error" class="error" hidden></p>
+      </form>
+      <p class="muted tiny center">Free forever · Your data stays on your server</p>
+    </div>
+  </div>
+
+  <!-- ========== MAIN APP ========== -->
+  <div id="main-screen" class="screen" hidden>
+    <header id="topbar">
+      <div class="topbar-left"><span id="topbar-emoji">🧠</span><span id="topbar-title">Daily Quiz</span></div>
+      <span id="topbar-date" class="muted tiny"></span>
+    </header>
+
+    <main id="views">
+      <!-- HOME -->
+      <section id="view-home" class="view">
+        <div class="greeting">
+          <h2 id="home-greeting">Hi 👋</h2>
+          <p class="muted" id="home-sub">Ready for today’s quiz?</p>
+        </div>
+
+        <div id="home-hero" class="card hero">
+          <div class="skeleton sk-lg"></div>
+        </div>
+
+        <div class="section-head">
+          <h3>Your field</h3>
+          <span class="muted tiny">switch anytime</span>
+        </div>
+        <div id="home-fields" class="chips"></div>
+
+        <div id="home-reminder" class="card reminder" hidden></div>
+      </section>
+
+      <!-- QUIZ -->
+      <section id="view-quiz" class="view" hidden>
+        <div id="quiz-container"><div class="skeleton sk-lg"></div><div class="skeleton"></div></div>
+      </section>
+
+      <!-- LEARN -->
+      <section id="view-learn" class="view" hidden>
+        <div class="section-head"><h3 id="learn-title">Free courses</h3></div>
+        <p class="muted" id="learn-sub">Hand-picked free resources for your field.</p>
+        <div id="courses-list"></div>
+      </section>
+
+      <!-- OPPORTUNITIES -->
+      <section id="view-opps" class="view" hidden>
+        <div class="card location-bar">
+          <div class="loc-row">
+            <input id="opp-location" class="input" type="text" placeholder="Your city (e.g. Lahore)" />
+            <button id="btn-geo" class="btn ghost" type="button" title="Use my location">📍</button>
+          </div>
+          <p id="geo-status" class="muted tiny" hidden></p>
+        </div>
+
+        <div class="tabs">
+          <button class="tab active" data-tab="jobs" type="button">💼 Jobs</button>
+          <button class="tab" data-tab="startups" type="button">🚀 Startups</button>
+        </div>
+
+        <div id="opp-jobs">
+          <div id="jobs-list"><div class="skeleton sk-lg"></div></div>
+          <div id="job-links"></div>
+        </div>
+        <div id="opp-startups" hidden>
+          <div id="startups-list"><div class="skeleton sk-lg"></div></div>
+        </div>
+      </section>
+
+      <!-- SETTINGS -->
+      <section id="view-settings" class="view" hidden>
+        <div class="card">
+          <div class="profile-row">
+            <div class="avatar" id="set-avatar">?</div>
+            <div>
+              <strong id="set-name">—</strong>
+              <div class="muted tiny" id="set-email">—</div>
+            </div>
+          </div>
+          <label class="label" for="set-field">Field of study</label>
+          <select id="set-field" class="input"></select>
+
+          <label class="label" for="set-location">Your location (for jobs &amp; startups)</label>
+          <input id="set-location" class="input" type="text" placeholder="City, country" />
+
+          <label class="label" for="set-time">Daily reminder time</label>
+          <input id="set-time" class="input" type="time" value="08:00" />
+          <p class="muted tiny">You’ll get a push notification at this time when your quiz is ready.</p>
+        </div>
+
+        <div class="card">
+          <h3>🔔 Notifications</h3>
+          <p class="muted tiny" id="notif-status">Checking…</p>
+          <div class="btn-row">
+            <button id="btn-enable-push" class="btn primary" type="button">Enable daily reminders</button>
+            <button id="btn-test-push" class="btn ghost" type="button" hidden>Send test</button>
+          </div>
+          <p id="push-hint" class="muted tiny" hidden></p>
+        </div>
+
+        <div class="card">
+          <h3>📱 Install app</h3>
+          <p class="muted tiny">Use your browser menu → <em>Add to Home screen</em> to install Daily Quiz like a native app.</p>
+        </div>
+
+        <button id="btn-logout" class="btn danger block" type="button">Log out</button>
+        <p class="muted tiny center pad-b">Daily Quiz · v1.0</p>
+      </section>
+    </main>
+
+    <nav id="bottom-nav">
+      <button class="nav-btn active" data-view="home" type="button"><span class="nav-ico">🏠</span><span>Home</span></button>
+      <button class="nav-btn" data-view="quiz" type="button"><span class="nav-ico">📝</span><span>Quiz</span></button>
+      <button class="nav-btn" data-view="learn" type="button"><span class="nav-ico">📚</span><span>Learn</span></button>
+      <button class="nav-btn" data-view="opps" type="button"><span class="nav-ico">💼</span><span>Jobs</span></button>
+      <button class="nav-btn" data-view="settings" type="button"><span class="nav-ico">⚙️</span><span>Settings</span></button>
+    </nav>
+  </div>
+
+  <div id="toast" hidden></div>
+
+  <script src="/app.js" defer></script>
+</body>
+</html>
